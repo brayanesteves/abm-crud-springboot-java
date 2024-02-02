@@ -4,6 +4,7 @@ import com.halconbit.abm.entity.User;
 import com.halconbit.abm.request.UserRequest;
 import com.halconbit.abm.service.NotificationService;
 import com.halconbit.abm.service.UserService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
+@Api(tags = "Users")
 public class UserController {
     private final UserService userService;
 
