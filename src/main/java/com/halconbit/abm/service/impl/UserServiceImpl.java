@@ -13,13 +13,13 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository;
-    private final NotificationService notificationService;
+    private final UserRepository userRepository; // Repositorio para acceder a los usuarios
+    private final NotificationService notificationService; // Servicio de notificaciones
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, NotificationService notificationService) {
-        this.userRepository = userRepository;
-        this.notificationService = notificationService;
+        this.userRepository = userRepository; // Inyecta el repositorio de usuarios
+        this.notificationService = notificationService; // Inyecta el servicio de notificaciones
     }
 
     @Override
@@ -27,18 +27,18 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setName(name);
         user.setEmail(email);
-        notificationService.sendNewUserNotification(user);
-        return userRepository.save(user);
+        notificationService.sendNewUserNotification(user); // Envía una notificación sobre el nuevo usuario
+        return userRepository.save(user); // Guarda el usuario en el repositorio
     }
 
     @Override
     public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id);
+        return userRepository.findById(id); // Obtiene un usuario del repositorio por su ID
     }
 
     @Override
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userRepository.findAll(); // Obtiene todos los usuarios del repositorio
     }
 
     @Override
@@ -48,16 +48,16 @@ public class UserServiceImpl implements UserService {
             User user = optionalUser.get();
             user.setName(name);
             user.setEmail(email);
-            notificationService.sendUserUpdatedNotification(user);
-            return userRepository.save(user);
+            notificationService.sendUserUpdatedNotification(user); // Envía una notificación sobre la actualización del usuario
+            return userRepository.save(user); // Guarda los cambios del usuario en el repositorio
         }
-        throw new RuntimeException("User not found");
+        throw new RuntimeException("User not found"); // Lanza una excepción si el usuario no se encuentra
     }
 
     @Override
     public void deleteUser(Long id) {
         User user = userRepository.findById(id).get();
-        notificationService.sendUserDeletedNotification(user);
-        userRepository.deleteById(id);
+        notificationService.sendUserDeletedNotification(user); // Envía una notificación sobre la eliminación del usuario
+        userRepository.deleteById(id); // Elimina el usuario del repositorio
     }
 }
